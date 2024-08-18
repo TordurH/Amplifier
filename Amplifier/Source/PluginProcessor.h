@@ -9,6 +9,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "4BandEQ.h"
+
 
 //==============================================================================
 /**
@@ -56,6 +58,8 @@ public:
 private:
 
     enum{
+        
+        EQ,
         limiter,
         input,
         shaper,
@@ -63,16 +67,22 @@ private:
         impulse
     };
 
-    juce::dsp::ProcessorChain<juce::dsp::Compressor<float>, juce::dsp::Gain<float>, juce::dsp::WaveShaper<float>, juce::dsp::Gain<float>, juce::dsp::Convolution> chain;
+    juce::dsp::ProcessorChain<
+        ampEQ, //4 band EQ defined in 4BandEQ.h
+        juce::dsp::Compressor<float>, 
+        juce::dsp::Gain<float>, 
+        juce::dsp::WaveShaper<float>, 
+        juce::dsp::Gain<float>, 
+        juce::dsp::Convolution
+    > chain;
 
-    juce::dsp::LinkwitzRileyFilter<float> lwFilter;
 
     juce::AudioProcessorValueTreeState apvts{*this, nullptr, "PARAMS", setParams()};
 
     static juce::AudioProcessorValueTreeState::ParameterLayout setParams();
     
-    
-    
+
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AmplifierAudioProcessor)
 };

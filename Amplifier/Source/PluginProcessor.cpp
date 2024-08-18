@@ -25,13 +25,14 @@ AmplifierAudioProcessor::AmplifierAudioProcessor()
     chain.template get<shaper>().functionToUse = [](float x) {
 
 
-        x = std::abs(x);
+        x = std::tanh(std::abs(x)-0.5);//soft clipper
 
+        float y;
 
+        (x < 0.9) ? y = x : y = 0.9;//Hard clipper
         //return  juce::jlimit(-0.75f, 0.75f, sample);
 
-        return std::tanh(x-0.5f);//soft clipper
-
+        return x;
         
 
         };
@@ -121,6 +122,7 @@ void AmplifierAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     spec.sampleRate = sampleRate;
 
     chain.prepare(spec);
+    chain.reset();
 }
 
 void AmplifierAudioProcessor::releaseResources()
@@ -128,7 +130,6 @@ void AmplifierAudioProcessor::releaseResources()
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 
-    chain.reset();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -217,10 +218,22 @@ juce::AudioProcessorValueTreeState::ParameterLayout AmplifierAudioProcessor::set
 
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
-    juce::NormalisableRange<float> gainRange(0, 46, 0.1, 1);
+    juce::NormalisableRange<float> inputRange(0, 46, 0.1, 1);
+    juce::NormalisableRange<float> outputRange(-46, 46, 0.1, 1);
 
-    layout.add(std::make_unique<juce::AudioParameterFloat>("inputID", "input", gainRange, 0),
-        std::make_unique<juce::AudioParameterFloat>("outputID", "output", gainRange, 0));
+    layout.add(
+        std::make_unique<juce::AudioParameterFloat>("inputID",
+            "input",
+            inputRange,
+            15.0),
+
+
+        std::make_unique<juce::AudioParameterFloat>("outputID",
+            "output",
+            outputRange,
+            0)
+    );
+
 
     return layout;
 }

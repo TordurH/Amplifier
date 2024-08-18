@@ -631,6 +631,9 @@
     <ClCompile Include="..\..\Source\PluginEditor.cpp">
       <Filter>Amplifier\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\4BandEQ.cpp">
+      <Filter>Amplifier</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\Bboy_\Desktop\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
       <Filter>JUCE Modules\juce_audio_basics\audio_play_head</Filter>
     </ClCompile>
@@ -3215,6 +3218,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginEditor.h">
       <Filter>Amplifier\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\4BandEQ.h">
+      <Filter>Amplifier</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\Bboy_\Desktop\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">
       <Filter>JUCE Modules\juce_audio_basics\audio_play_head</Filter>
