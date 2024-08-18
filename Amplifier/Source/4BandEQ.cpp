@@ -30,7 +30,7 @@ void ampEQ::prepare(const juce::dsp::ProcessSpec& spec) {
     numChannels = spec.numChannels;
     blockSize = spec.maximumBlockSize;
 
-    //Set filter types. They're constant in this one
+    //Set filter types. They're constant in this one. Might be able to improve it even more
     bands[0].coefficients = juce::dsp::IIR::Coefficients<float>::makeLowShelf(sampleRate, 64.0, 6.7, juce::Decibels::decibelsToGain( - 24.0));
     bands[1].coefficients = juce::dsp::IIR::Coefficients<float>::makeAllPass(sampleRate, 360.0, 0.2);
     bands[2].coefficients = juce::dsp::IIR::Coefficients<float>::makeBandPass(sampleRate, 2740.0, 1.0);
